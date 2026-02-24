@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 export default function Footer() {
   const currentYear = new Date().getFullYear()
 
@@ -45,17 +47,28 @@ export default function Footer() {
             </h4>
             <ul className="space-y-3">
               {[
-                { label: 'Services', href: '#services' },
-                { label: 'Team', href: '#team' },
-                { label: 'Testimonials', href: '#testimonials' },
+                { label: 'Services', href: '/#services' },
+                { label: 'Team', href: '/#team' },
+                { label: 'Testimonials', href: '/#testimonials' },
+                { label: 'About', href: '/about' }, // Changed: Added About link
               ].map((link) => (
                 <li key={link.href}>
-                  <a
-                    href={link.href}
-                    className="text-gray-400 hover:text-white text-sm transition-colors duration-200"
-                  >
-                    {link.label}
-                  </a>
+                  {/* Changed: Use Link for internal pages, anchor for hash links */}
+                  {link.href.startsWith('/') && !link.href.includes('#') ? (
+                    <Link
+                      href={link.href}
+                      className="text-gray-400 hover:text-white text-sm transition-colors duration-200"
+                    >
+                      {link.label}
+                    </Link>
+                  ) : (
+                    <a
+                      href={link.href}
+                      className="text-gray-400 hover:text-white text-sm transition-colors duration-200"
+                    >
+                      {link.label}
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>
